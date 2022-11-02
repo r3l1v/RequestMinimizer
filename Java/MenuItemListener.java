@@ -7,17 +7,22 @@ import java.util.List;
 
 public class MenuItemListener implements ActionListener {
     // class used to handle the button click in context menu
-    private final IHttpRequestResponse[] requestResponse;
+    private IHttpRequestResponse[] requestResponse;
     private PrintWriter stdout;
+    private IBurpExtenderCallbacks callbacks;
+    private IExtensionHelpers helpers;
 
-    MenuItemListener(IHttpRequestResponse[] requestResponse,PrintWriter stdout) {
+    MenuItemListener(IBurpExtenderCallbacks callbacks,IExtensionHelpers helpers, IHttpRequestResponse[] requestResponse,PrintWriter stdout) {
         this.requestResponse = requestResponse;
         this.stdout = stdout;
+        this.callbacks = callbacks;
+        this.helpers = helpers;
     }
 
     // action to be performed on th click
     @Override
     public void actionPerformed(ActionEvent e) {
-        stdout.println("button click");
+        burp.requestMinimizer minimizer = new burp.requestMinimizer(callbacks, helpers, requestResponse, stdout);
+        minimizer.minimize();
     }
 }

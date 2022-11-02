@@ -45,14 +45,11 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
         List<JMenuItem> menu = new ArrayList<JMenuItem>();
         JMenuItem ContextMenuButton = new JMenuItem("Send to Minimizer");
 
-        MenuItemListener listener = new MenuItemListener(requestResponse, stdout);
+        MenuItemListener listener = new MenuItemListener(callbacks, helpers, requestResponse, stdout);
         ContextMenuButton.addActionListener(listener);
 
         menu.add(ContextMenuButton);
         return menu;
     }
 
-    public void print(String toPrint){
-        stdout.println(toPrint);
-    }
 }

@@ -75,9 +75,9 @@ public class requestMinimizer extends Thread {
         }
 
         // make and print minimized request
-        stdout.println("here");
+
         byte[] minimizedRequest = helpers.buildHttpMessage(necessaryHeaders, requestBody);
         byte[] minimizedResponse = callbacks.makeHttpRequest(httpService, minimizedRequest).getResponse();
-        stdout.println(minimizedResponse);
+        stdout.println(helpers.bytesToString(minimizedRequest));
     }
 }

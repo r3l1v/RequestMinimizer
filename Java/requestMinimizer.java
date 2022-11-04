@@ -1,10 +1,11 @@
 package burp;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 
-public class requestMinimizer {
+public class requestMinimizer extends Thread {
 
     private IHttpRequestResponse requestResponse;
     private PrintWriter stdout;
@@ -26,7 +27,8 @@ public class requestMinimizer {
         this.httpService = this.requestResponse.getHttpService();
     }
 
-    public void minimize(){
+    @Override
+    public void run(){
 
         String host = httpService.getHost();
         int port = httpService.getPort();
@@ -36,10 +38,12 @@ public class requestMinimizer {
         //prepare request to minimize
         IRequestInfo requestInfo = helpers.analyzeRequest(originalRequest);
         List<String> originalRequestHeaders = requestInfo.getHeaders();
+
         int bodyOffset = requestInfo.getBodyOffset();
-        String stringRequestBody = this.originalRequest.toString().substring(bodyOffset);
-        
-        byte[] requestBody = stringRequestBody.getBytes();
+        int lenght = originalRequest.length - bodyOffset;
+        //String stringRequestBody = this.originalRequest.toString().substring(bodyOffset);
+        byte[] requestBody = new byte[lenght];
+        System.arraycopy(originalRequest,requestInfo.getBodyOffset(), requestBody, 0, lenght);
 
         // build request to minimize
         byte[] requestToMinimize = helpers.buildHttpMessage(originalRequestHeaders, requestBody);
@@ -48,14 +52,14 @@ public class requestMinimizer {
         byte[] originalResponse = callbacks.makeHttpRequest(httpService, requestToMinimize).getResponse();
 
         // initialize array of necessary headers
-        List<String> necessaryHeaders = null;
+        List<String> necessaryHeaders = new ArrayList<String>();
         necessaryHeaders.add(originalRequestHeaders.get(0));
         necessaryHeaders.add(originalRequestHeaders.get(1));
 
         // iterate through headers and remove not necessary ones
         for(int i = 2; i < originalRequestHeaders.size(); i++){
             //copy headers and remove one
-            List<String> tempHeaders = originalRequestHeaders;
+            List<String> tempHeaders = new ArrayList<String>(originalRequestHeaders);
             tempHeaders.remove(i);
 
             // make request without the removed header
@@ -63,16 +67,17 @@ public class requestMinimizer {
             byte[] tempResponse = callbacks.makeHttpRequest(httpService, tempRequest).getResponse();
 
             // compare responses
-            List<String> difference = helpers.analyzeResponseVariations(originalResponse,tempResponse).getInvariantAttributes();
+            List<String> difference = new ArrayList<String>();
+            difference = helpers.analyzeResponseVariations(originalResponse,tempResponse).getVariantAttributes();
             if(difference.size() > 0){
-                necessaryHeaders.add(tempHeaders.get(i));
+               necessaryHeaders.add(originalRequestHeaders.get(i));
             }
         }
 
         // make and print minimized request
-
+        stdout.println("here");
         byte[] minimizedRequest = helpers.buildHttpMessage(necessaryHeaders, requestBody);
         byte[] minimizedResponse = callbacks.makeHttpRequest(httpService, minimizedRequest).getResponse();
-        stdout.println(minimizedRequest.toString());
+        stdout.println(minimizedResponse);
     }
 }

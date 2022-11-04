@@ -22,7 +22,10 @@ public class MenuItemListener implements ActionListener {
     // action to be performed on th click
     @Override
     public void actionPerformed(ActionEvent e) {
+
+
         burp.requestMinimizer minimizer = new burp.requestMinimizer(callbacks, helpers, requestResponse, stdout);
-        minimizer.minimize();
+        minimizer.start();
+
     }
 }

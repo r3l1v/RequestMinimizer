@@ -78,6 +78,10 @@ public class requestMinimizer extends Thread {
 
         byte[] minimizedRequest = helpers.buildHttpMessage(necessaryHeaders, requestBody);
         byte[] minimizedResponse = callbacks.makeHttpRequest(httpService, minimizedRequest).getResponse();
-        stdout.println(helpers.bytesToString(minimizedRequest));
+
+        burp.uiWindow window = new burp.uiWindow("Request Minimizer");
+        window.setVisible();
+        window.setRequest(helpers.bytesToString(minimizedRequest));
+        window.setRequestLabel(requestInfo.getUrl().toString());
     }
 }

@@ -26,7 +26,7 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
         // get helpers
         this.helpers = callbacks.getHelpers();
         // extension name
-        callbacks.setExtensionName("requestMinimizer");
+        callbacks.setExtensionName("Request Minimizer");
         // system output stream
         stdout = new PrintWriter(callbacks.getStdout(), true);
         // registering HTTP listener

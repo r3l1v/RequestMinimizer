@@ -10,7 +10,7 @@ Building the extension is possible with gradle. All necessary files are included
 
 ## Usage
 
-Upon adding the extension into Burp Suite, Request Minimizer can be invoked by right clicking on request that we want to minimize and selecting it from the context menu. `Extensions`->`Request Minimizer`->`Send to Minimizer`
+Upon adding the extension into Burp Suite, Request Minimizer can be invoked by right clicking on request that we want to minimize and selecting it from the context menu. `Extensions`->`Request Minimizer`->`Minimize Headers`
 
 ![Context menu](./image/menu.png)
 

@@ -43,12 +43,35 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
     public List<JMenuItem> createMenuItems(IContextMenuInvocation invocation){
         IHttpRequestResponse[] requestResponse = invocation.getSelectedMessages();
         List<JMenuItem> menu = new ArrayList<JMenuItem>();
-        JMenuItem ContextMenuButton = new JMenuItem("Send to Minimizer");
 
-        MenuItemListener listener = new MenuItemListener(callbacks, helpers, requestResponse, stdout);
-        ContextMenuButton.addActionListener(listener);
+        // Header minimalization button
+        JMenuItem ContextMenuButton_headers = new JMenuItem("Minimize Headers");
+        ContextMenuButton_headers.addActionListener(new ActionListener() {
 
-        menu.add(ContextMenuButton);
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    burp.requestMinimizer minimizer = new burp.requestMinimizer(callbacks, helpers, requestResponse, stdout);
+                    minimizer.start();
+                }
+
+            });
+        
+
+        // Cookie minimalization button
+        JMenuItem ContextMenuButton_cookies = new JMenuItem("Minimize Cookies");
+        ContextMenuButton_cookies.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    burp.cookieMinimizer cookie_minimizer = new burp.cookieMinimizer(callbacks, helpers, requestResponse, stdout);
+                    cookie_minimizer.start();
+                }
+
+            });
+
+        menu.add(ContextMenuButton_headers);
+        menu.add(ContextMenuButton_cookies);
+
         return menu;
     }
 

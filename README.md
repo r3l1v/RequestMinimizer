@@ -20,6 +20,5 @@ The request on which has the context menu been invoked will be passed into the c
 
 ## To do 
 
-- minimalization of cookies
 - minimalization of parameters
 - minimalization of request body (xml/json)

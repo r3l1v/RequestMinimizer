@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import burp.IMenuItemHandler;
-import burp.MenuItemListener;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -68,7 +67,18 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
                 }
 
             });
+        // Paramater minimaliztion button
+        JMenuItem ContextMenuButton_parameters = new JMenuItem("Minimize Parameters");
+        ContextMenuButton_parameters.addActionListener(new ActionListener() {
 
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    burp.parameterMinimizer parameter_minimizer = new burp.parameterMinimizer(callbacks, helpers, requestResponse, stdout);
+                }
+
+            });
+
+        //menu.add(ContextMenuButton_parameters);
         menu.add(ContextMenuButton_headers);
         menu.add(ContextMenuButton_cookies);
 

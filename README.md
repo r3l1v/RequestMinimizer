@@ -16,7 +16,7 @@ Two options will be available, `Minimize Headers` and `Minimize Cookies`.
 
 ![Context menu](./image/menu.png)
 
-The request on which has the context menu been invoked will be passed into the corresponding requestMinimizer classes and after the minimalization process will be done, new UI window with option to copy this request will appear.
+The request on which has the context menu been invoked will be passed into the corresponding requestMinimizer classes and after the minimalization process will be done, new tab in Reapeter with minimized request will appear.
 
 ## To do 
 

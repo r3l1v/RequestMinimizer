@@ -1,6 +1,10 @@
 # Burp Suite Request Minimizer Extension
 
-This extension minimizes headers or cookies for current HTTP request in the invoked context. It will display the Request with the smallest number of headers/cookies without any change in the Response  
+This extension minimizes headers or cookies for current HTTP request in the invoked context. It will display the Request with the smallest number of headers/cookies without any change in the Response
+
+## Warning 
+
+This extension was part of internal development, as the functionalty it aimed to achieve was added into already existing extension, [Request Minimizer](https://portswigger.net/bappstore/cc16f37549ff416b990d4312490f5fd1), this project is no longer maintained.
 
 ## Installation
 
